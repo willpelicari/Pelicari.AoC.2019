@@ -2,6 +2,6 @@
 {
     public interface IFuelCalculatorService
     {
-        long CalculateTotalFuel(int day, int puzzleNumber);
+        long CalculateTotalFuel(int day, int puzzleNumber, bool considerFuelMass = true);
     }
 }

@@ -55,14 +55,31 @@ namespace Pelicari.AoC._2019.Tests.Services
         [DataRow(14, 2)]
         [DataRow(1969, 654)]
         [DataRow(100756, 33583)]
-        public void CalculateModuleFuel_WhenModuleMassIsGreaterThanSix_ThenCalculateRightAmout(int mass, int expectedFuel)
+        public void CalculateModuleFuel_WhenNotConsideringFuelMass_ThenCalculateRightAmout(int mass, int expectedFuel)
         {
             //Arrange
             var module = new Module() { Mass = mass };
             _moduleRepository.GetModules(Day, PuzzleNumber).Returns(new[] { module });
 
             //Act
-            var result = _fuelCalculatorService.CalculateTotalFuel(1, 1);
+            var result = _fuelCalculatorService.CalculateTotalFuel(1, 1, false);
+
+            //Assert
+            result.Should().Be(expectedFuel);
+        }
+
+        [DataTestMethod]
+        [DataRow(14, 2)]
+        [DataRow(1969, 966)]
+        [DataRow(100756, 50346)]
+        public void CalculateModuleFuel_WhenConsideringFuelMass_ThenCalculateRightAmout(int mass, int expectedFuel)
+        {
+            //Arrange
+            var module = new Module() { Mass = mass };
+            _moduleRepository.GetModules(Day, PuzzleNumber).Returns(new[] { module });
+
+            //Act
+            var result = _fuelCalculatorService.CalculateTotalFuel(1, 1, true);
 
             //Assert
             result.Should().Be(expectedFuel);
